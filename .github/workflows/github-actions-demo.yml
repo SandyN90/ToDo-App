@@ -13,11 +13,16 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+
       - name: Merge pull request
         if: github.event.pull_request.merged == true && github.event.pull_request.head.repo.full_name == github.repository
         run: |
-          git config sandyn90 "${{ github.actor }}"
-          git config sandeepkumarnavik5@gmail.com "${{ github.actor }}@users.noreply.github.com"
+          git config user.name "${{ github.actor }}"
+          git config user.email "${{ github.actor }}@users.noreply.github.com"
           git checkout -B "${{ github.ref }}"
           git merge "${{ github.event.pull_request.head.sha }}"
           git push origin "${{ github.ref }}"
