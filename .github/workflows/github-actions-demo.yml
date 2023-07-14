@@ -1,3 +1,4 @@
+
 name: Merge New Pull Request
 
 on:
@@ -7,7 +8,10 @@ on:
 jobs:
   merge:
     runs-on: ubuntu-latest
-
+    
+    env:
+      GH_TOKEN: ${{ github.token }}
+      
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -17,5 +21,6 @@ jobs:
         run: |
           git config user.name "${{ github.actor }}"
           git config user.email "${{ github.actor }}@users.noreply.github.com"
-          git merge "${{ github.event.pull_request.head.sha }}"
+          gh pr merge ${{ github.event.pull_request.number }} -m 
           git push origin "${{ github.ref }}"
+          
