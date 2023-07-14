@@ -12,6 +12,11 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+<<<<<<< HEAD
+=======
+        with:
+          node-version: '16'
+>>>>>>> minor changes
 
       - name: Set up Node.js
         uses: actions/setup-node@v2
