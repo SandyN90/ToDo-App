@@ -19,3 +19,4 @@ jobs:
           git config user.email "${{ github.actor }}@users.noreply.github.com"
           gh pr merge ${{ github.event.pull_request.number }} --auto-merge --squash --commit-message "Merge pull request #${{ github.event.pull_request.number }}" --token ${{ github.token }}
           git push origin "${{ github.ref }}"
+          
