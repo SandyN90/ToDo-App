@@ -17,6 +17,6 @@ jobs:
         run: |
           git config user.name "${{ github.actor }}"
           git config user.email "${{ github.actor }}@users.noreply.github.com"
-          gh pr merge ${{ github.event.pull_request.number }} -m "Merge pull request #${{ github.event.pull_request.number }}"
+          gh pr merge ${{ github.event.pull_request.number }} --auto -s -m 
           git push origin "${{ github.ref }}"
           
