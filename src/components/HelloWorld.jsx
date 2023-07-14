@@ -3,7 +3,6 @@ export default function HelloWorld(){
         <>
         <h1>
             hi
-            
         </h1>
         </>
     )
