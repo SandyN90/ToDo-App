@@ -2,7 +2,7 @@ export default function HelloWorld(){
     return (
         <>
         <h1>
-            hi
+            Hi, this is HelloWorld component
         </h1>
         </>
     )
