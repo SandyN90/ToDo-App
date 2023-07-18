@@ -1,4 +1,4 @@
-name: Merge Renovate PR if Build Successful
+name: Update Version and Merge Renovate PR
 
 on:
   push:
@@ -6,19 +6,38 @@ on:
       - renovate/*
 
 jobs:
-  merge:
+  update-version:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with: 
+	        ref: ${{ github.ref }}
+	      name: "cat package.json"
+	      Run: cat ./package.json
+        name: "Setup Node.js"
+        uses: "actions/setup-node@v1"
+        with:
+	        node-version: 12
+        name: Update Version
+        uses: "phips28/gh-action-bump-version@master"
+        with:
+	        tag-prefix: ''
+	      env:
+	        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+	      name: "cat package.json"
+	      run: cat ./package.json
+
+  merge-renovate-pr:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Run build
-        run: |
-          npm run build
+        uses: actions/checkout@v2
 
       - name: Merge Renovate PR
-        uses: repo-sync/pull-request@v3
+        uses: repo-sync/pull-request@v2
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           pull_request_number: ${{ github.event.pull_request.number }}
