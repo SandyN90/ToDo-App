@@ -1,47 +1,31 @@
-name: Update Version and Merge Renovate PR
+name: "Bump Version"
 
 on:
   push:
     branches:
-      - renovate/*
+      - "master"
 
 jobs:
-  update-version:
+  bump-version:
+    name: "Bump Version on master"
     runs-on: ubuntu-latest
-    
+
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-        with: 
-	        ref: ${{ github.ref }}
-	      name: "cat package.json"
-	      Run: cat ./package.json
-        name: "Setup Node.js"
+      - name: "Checkout source code"
+        uses: "actions/checkout@v2"
+        with:
+          ref: ${{ github.ref }}
+      - name: "cat package.json"
+        run: cat ./package.json
+      - name: "Setup Node.js"
         uses: "actions/setup-node@v1"
         with:
-	        node-version: 12
-        name: Update Version
+          node-version: 12
+      - name: "Automated Version Bump"
         uses: "phips28/gh-action-bump-version@master"
         with:
-	        tag-prefix: ''
-	      env:
-	        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-	      name: "cat package.json"
-	      run: cat ./package.json
-
-  merge-renovate-pr:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Merge Renovate PR
-        uses: repo-sync/pull-request@v2
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          pull_request_number: ${{ github.event.pull_request.number }}
-          merge_method: 'squash'
-          merge_commit_message: 'Merging Renovate PR'
-          delete_branch: true
-        if: ${{ success() }}
+          tag-prefix: ''
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: "cat package.json"
+        run: cat ./package.json
